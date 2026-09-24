@@ -1,0 +1,27 @@
+# Copy ONLY into an authorised product repository; do not modify the organiser target.
+# Agent pinned to the published implementation. Update both refs after reviewing a new release.
+name: Product security
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: product-security-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  security:
+    # Fork PRs have no API secret and fail closed until a trusted review is arranged.
+    uses: nureek2001/aiagentcheck/.github/workflows/reusable-security.yml@5e48ee06614991b1259cfedbcd8c0bc38494f33f
+    with:
+      agent_repository: nureek2001/aiagentcheck
+      agent_ref: 5e48ee06614991b1259cfedbcd8c0bc38494f33f
+      target_repository: ${{ github.repository }}
+      target_ref: ${{ github.sha }}
+    secrets:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+  delivery:
+    needs: security
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Replace with your authorised deployment steps.'
