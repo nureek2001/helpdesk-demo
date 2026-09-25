@@ -45,6 +45,8 @@ jobs:
       agent_ref: f01bb3e629498d92257cf441b12e81b52e401946
       target_repository: ${{ github.repository }}
       target_ref: ${{ github.sha }}
+      max_tokens: 12000000
+      max_requests: 300
     secrets:
       DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
   delivery:
