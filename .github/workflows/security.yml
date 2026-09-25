@@ -36,12 +36,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python manage.py test portal --noinput
   security:
-    # Audit the PR merge snapshot too; skipped checks do not permit merge.
-    # Fork PRs have no API secret and fail closed until a trusted review is arranged.
-    uses: nureek2001/aiagentcheck/.github/workflows/reusable-security.yml@f01bb3e629498d92257cf441b12e81b52e401946
+    uses: nureek2001/aiagentcheck/.github/workflows/reusable-security.yml@798ffbe640ffea5a78e307da5c4e6dea45365e2a
     with:
       agent_repository: nureek2001/aiagentcheck
-      agent_ref: f01bb3e629498d92257cf441b12e81b52e401946
+      agent_ref: 798ffbe640ffea5a78e307da5c4e6dea45365e2a
       target_repository: ${{ github.repository }}
       target_ref: ${{ github.sha }}
       max_tokens: 12000000
